@@ -1,0 +1,89 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Prompt&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <title>EzQuiz</title>
+  </head>
+  <body>
+    <div class="container">
+      <div class="row" id="info"></div>
+    </div>
+    <script>
+      let requestURL = "ezquiz.json";
+      let request = new XMLHttpRequest();
+      request.onreadystatechange = function () {
+        if (request.readyState == 4 && request.status == 200) {
+          dataReportStatus(JSON.parse(request.responseText));
+        }
+      };
+      request.open("GET", requestURL, true);
+      request.send();
+      
+      function dataReportStatus(data) {
+        let song = "";
+
+        for (var i = 0; i < data.tracks.items.length; i++) {
+          for (var j = 0; j < data.tracks.items[i].album.images.length; j++) {
+            song += '<div class="col-4">';
+            song += '<div class="card" style="width: 640px;">';
+            song +=
+              '<img class="card-img-top" src="' +
+              data.tracks.items[i].album.images[j].url +
+              '">';
+            song += '<div class="card-body">';
+            song += '<p class="card-text"></p>';
+            song += "</div></div></div>";
+
+            document.querySelector("#info").innerHTML += song;
+          }
+        }
+      }
+
+      // function dataReportStatus(data) {
+      //   let info = "";
+      //   for (let i = 0; i < data.tracks.items.length; i++) {
+      //     info += '<div class="col-sm-4">';
+      //     info += '<div class="card">';
+      //     for (var j = 0; j < data.tracks.items[i].album.images.length; j++) {
+      //       info +=
+      //         '<img class="card-img-top" src="' +
+      //         data.tracks.items[i].album.images[j].url +
+      //         '">';
+      //       // let box = document.createElement("div");
+      // box.setAttribute("class", "col-sm-4");
+      // let card = document.createElement("div");
+      // card.setAttribute("class", "card");
+      // card.setAttribute("style", "border: none");
+      // let img = document.createElement("img");
+      // img.setAttribute("src", data.tracks.items[i].album.images[0].url);
+      // img.setAttribute("class", "card-img-top mb-2 mt-3");
+      // let songName = document.createElement("b");
+      // songName.setAttribute("class", "text-secondary");
+      // songName.appendChild(document.createTextNode(data[i].song));
+      //   }
+      //   info += '<div class="card-body">';
+      //   info += '<p class="card-text"></p>';
+      //   info += "</div></div></div>";
+      //   document.querySelector("#info").innerHTML += info;
+      // }
+
+      // box.appendChild(card);
+      // box.appendChild(img);
+      // box.appendChild(songName);
+
+      // document.getElementById("info").appendChild(box);
+      // }
+    </script>
+  </body>
+</html>
